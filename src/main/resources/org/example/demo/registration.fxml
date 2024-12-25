@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Label?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo.CreateAccController">
     <children>
         <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="152.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
@@ -15,22 +16,23 @@
                 <Image url="@../../../image/acc_add.png" />
             </image>
         </ImageView>
-        <TextField layoutX="113.0" layoutY="198.0" promptText="Username">
+        <TextField fx:id="username" layoutX="113.0" layoutY="198.0" promptText="Username">
             <font>
                 <Font size="14.0" />
             </font>
         </TextField>
-        <TextField layoutX="113.0" layoutY="237.0" promptText="Age">
+        <TextField fx:id="age" layoutX="113.0" layoutY="237.0" promptText="Age">
             <font>
                 <Font size="14.0" />
             </font>
         </TextField>
-        <TextField layoutX="113.0" layoutY="277.0" promptText="Password">
+        <TextField fx:id="password" layoutX="113.0" layoutY="277.0" promptText="Password">
             <font>
                 <Font size="14.0" />
             </font>
         </TextField>
-        <Button layoutX="135.0" layoutY="348.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Создать аккаунт" />
-        <Hyperlink layoutX="135.0" layoutY="403.0" text="Войти в свой аккаунт?" onAction="#loginAcc"/>
+        <Button layoutX="135.0" layoutY="348.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Создать аккаунт" onAction="#createAccount" />
+        <Hyperlink layoutX="135.0" layoutY="403.0" onAction="#loginAcc" text="Войти в свой аккаунт?" />
+        <Label fx:id="messageLabel" layoutX="113.0" layoutY="320.0" text="" />
     </children>
 </AnchorPane>
