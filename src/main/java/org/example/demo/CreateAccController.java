@@ -36,11 +36,11 @@ public class CreateAccController implements Initializable {
 
     public void loginAcc(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-        Scene chatScene = new Scene(loader.load());
+        Scene registrationScene = new Scene(loader.load());
 
         // Получаем текущее окно через источник события
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(chatScene);
+        stage.setScene(registrationScene);
     }
 
     @FXML
@@ -86,8 +86,16 @@ public class CreateAccController implements Initializable {
             password.clear();
             age.clear();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("chat.fxml")); // Замените на ваш FXML файл
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("chat.fxml"));
             Scene chatScene = new Scene(loader.load());
+
+            // Получаем контроллер из загруженного FXML
+            ChatController chatController = loader.getController();
+            chatController.setUsername(user);
+
+
+
+            chatController.initializeChat(HelloApplication.getSocket(), HelloApplication.getAddress(), HelloApplication.getServerPort());
 
             Stage stage = (Stage) username.getScene().getWindow();
             stage.setScene(chatScene);

@@ -7,14 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-//import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.*;
 
 public class LoginController {
     @FXML
-    public Label messageLabel;
+    private Label messageLabel;
 
     @FXML
     private PasswordField password;
@@ -23,7 +22,7 @@ public class LoginController {
     private TextField username;
 
     public void createAcc(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("registration.fxml")); // Замените на ваш FXML файл
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("registration.fxml"));
         Scene registrationScene = new Scene(loader.load());
 
         // Получаем текущее окно через источник события
@@ -41,9 +40,17 @@ public class LoginController {
         }
 
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "root")) {
-            if (isUser(connection, user, pass)) {
+            if (isUser (connection, user, pass)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("chat.fxml"));
                 Scene chatScene = new Scene(loader.load());
+
+
+                ChatController chatController = loader.getController();
+                chatController.setUsername(user);
+
+
+
+                chatController.initializeChat(HelloApplication.getSocket(), HelloApplication.getAddress(), HelloApplication.getServerPort());
 
                 Stage stage = (Stage) username.getScene().getWindow();
                 stage.setScene(chatScene);
@@ -61,7 +68,7 @@ public class LoginController {
         }
     }
 
-    private boolean isUser(Connection connection, String user, String pass) throws SQLException {
+    private boolean isUser (Connection connection, String user, String pass) throws SQLException {
         String query = "SELECT COUNT(*) FROM account WHERE username = ? AND password = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, user);
